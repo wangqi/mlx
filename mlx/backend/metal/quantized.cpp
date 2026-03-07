@@ -1752,7 +1752,10 @@ void dispatch_qmv(
     const Stream& s,
     const std::string& mode) {
   // It is a qmv with a small inner dimension so route to qmv_quad kernel
-  if ((K == 128 || K == 64) && is_power_of_2(bits) && !global_scale) {
+  // PrismML 1-bit guard on the K == 64 qmv_quad fast path, combined with upstream's
+  // global_scale exclusion. wangqi modified 2026-10-17
+  if ((K == 128 || (K == 64 && bits >= 2)) && is_power_of_2(bits) &&
+      !global_scale) {
     qmv_quad(x, w, scales, biases, out, group_size, bits, M, N, K, d, s, mode);
     return;
   }
