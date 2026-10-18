@@ -1867,7 +1867,11 @@ void dispatch_qmv(
 
   // Small batch so route to qmv_wide, which reuses each weight group across the
   // M vectors.
-  if (M >= 2 && use_qmv_wide(mode, d) && !global_scale) {
+  // PrismML bias-free exclusion: there is no affine_sym_qmv_wide kernel, so
+  // affine_sym falls through to the plain qmv like it does for qmv_quad.
+  // wangqi modified 2026-10-30
+  if (M >= 2 && use_qmv_wide(mode, d) && !global_scale &&
+      mode != "affine_sym") {
     qmv_wide(x, w, scales, biases, out, group_size, bits, M, N, K, d, s, mode);
     return;
   }
