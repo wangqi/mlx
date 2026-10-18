@@ -32,6 +32,10 @@ delta on top of the mlx-core base vendored by `thirdparty/mlx-swift`.
 - `metal/quantized.cpp` `dispatch_qmv`: the `qmv_quad` gate combines upstream's `!global_scale`
   with PrismML's `K == 64 && bits >= 2` and `mode != "affine_sym"`.
 - `python/tests/cuda_skip.py`: deleted upstream; its one-line 1-bit skip is dropped.
+- Bias-free `affine_sym_qmv_fast` / `affine_sym_qmv` kernels, `sym_derived_bias` and the `bias_free`
+  template parameter on `qmv_fast_impl` / `qmv_impl` added to `kernels/quantized.h`, ported from
+  PrismML-Eng/mlx `4fc91df60`. Until this branch they lived only in mlx-swift's generated
+  `mlx-generated/` files, so `tools/update-mlx.sh` would have dropped them.
 
 ## Re-application on upgrade
 
