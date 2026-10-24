@@ -41,4 +41,4 @@ delta on top of the mlx-core base vendored by `thirdparty/mlx-swift`.
 
 When `thirdparty/mlx-swift-lm` raises the required `mlx-swift`/`mlx-core` version, this
 branch must be rebased onto the new mlx-core base and the regression gate re-run. See the
-`mlx-swift-lm-upgrade` skill (step 7) and `helper/docs/mlx-swift.md`.
+`engine-upgrade` skill (`mlx` adapter, P4) and `helper/docs/mlx-swift.md`.
